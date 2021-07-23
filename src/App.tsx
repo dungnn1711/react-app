@@ -2,13 +2,13 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { connect } from "react-redux";
-import IndexPage from "./components/index/index-page";
+import IndexPage from "./components/index/page-index";
 
-import Login from "./components/login";
+import Login from "./components/login/login-index";
 import { getAuthSelector } from "./store/authentication/selector";
 
 const App = () => {
-    const isAuthenticated = useSelector(getAuthSelector);
+    const isAuthenticated = useSelector(getAuthSelector) || false;
     const render = isAuthenticated ? <IndexPage /> : <Login />;
 
     useEffect(() => {

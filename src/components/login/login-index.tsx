@@ -11,15 +11,15 @@ import { connect } from "react-redux";
 interface LoginProps {
     usernameValue?: string,
     passwrodValue?: string,
-    handleLogin?: any
+    handleLogin: any
 }
 
 let [username, setUsername, passwrod, setPassword]: any = '';
 
 const Login: FC<LoginProps> = ({ handleLogin }) => {
     [username, setUsername] = useState('');
-    [passwrod, setPassword] = useState('')
-
+    [passwrod, setPassword] = useState('');
+    
     return (
         <form noValidate autoComplete="off">
             <Card>
@@ -57,13 +57,13 @@ const Login: FC<LoginProps> = ({ handleLogin }) => {
     );
 };
 
-const mapStateToProps = (state: any) => ({ state })
+const mapStateToProps = (state: any) => ({ state });
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
         // Dispatch login action
         handleLogin: () => dispatch({ type: 'REQUEST_LOGIN', payload: { username: username, password: passwrod } })
     }
-}
+};
 
 export default connect(null, mapDispatchToProps)(Login);
