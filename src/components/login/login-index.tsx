@@ -1,59 +1,69 @@
 
-import { FC, useState } from 'react';
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
+import { FC } from 'react';
 import { connect } from "react-redux";
+import { Form, Input, Button, Checkbox } from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 interface LoginProps {
-    usernameValue?: string,
-    passwrodValue?: string,
     handleLogin: any
 }
 
-let [username, setUsername, passwrod, setPassword]: any = '';
+let [username, passwrod, remember]: any = '';
 
 const Login: FC<LoginProps> = ({ handleLogin }) => {
-    [username, setUsername] = useState('');
-    [passwrod, setPassword] = useState('');
-    
+    const onFinish = (values: any) => {
+        username = values.username;
+        passwrod = values.password;
+        remember = values.remember;
+        handleLogin();
+    };
+
+    const onFinishFailed = (errorInfo: any) => {
+        console.log('Failed:', errorInfo);
+    };
+
     return (
-        <form noValidate autoComplete="off">
-            <Card>
-                <CardHeader title="Login From" />
-                <CardContent>
-                    <div>
-                        <TextField
-                            fullWidth
-                            id="username"
-                            type="email"
-                            label="Username"
-                            placeholder="Username"
-                            margin="normal"
-                            onChange={event => setUsername(event.target.value)}
-                        />
-                        <TextField
-                            fullWidth
-                            id="password"
-                            type="password"
-                            label="Password"
-                            placeholder="Password"
-                            margin="normal"
-                            onChange={event => setPassword(event.target.value)}
-                        />
-                    </div>
-                </CardContent>
-                <CardActions>
-                    <Button
-                        onClick={handleLogin}>
-                        Login
+        <div id='login-content'>
+            <Form
+                name="basic"
+                initialValues={{ remember: false }}
+                onFinish={onFinish}
+                onFinishFailed={onFinishFailed}
+            >
+                <Form.Item
+                    wrapperCol={{ offset: 9, span: 6 }}
+                    name="username"
+                    rules={[{ required: true, message: 'Please input your username!' }]}
+                >
+                    <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+                </Form.Item>
+
+                <Form.Item
+                    wrapperCol={{ offset: 9, span: 6 }}
+                    name="password"
+                    rules={[{ required: true, message: 'Please input your password!' }]}
+                >
+                    <Input.Password
+                        prefix={<LockOutlined className="site-form-item-icon" />}
+                        type="password"
+                        placeholder="Password" />
+                </Form.Item>
+
+                <Form.Item name="remember" valuePropName="unchecked" wrapperCol={{ offset: 9, span: 6 }}>
+                    <Checkbox>Remember me</Checkbox>
+                    <a className="login-form-forgot" href="">
+                        Forgot password
+                    </a>
+                </Form.Item>
+
+                <Form.Item wrapperCol={{ offset: 9, span: 6 }}>
+                    <Button type="primary" htmlType="submit" className="login-form-button">
+                        Submit
                     </Button>
-                </CardActions>
-            </Card>
-        </form>
+                    Or <a href="">register now!</a>
+                </Form.Item>
+            </Form>
+        </div>
     );
 };
 
