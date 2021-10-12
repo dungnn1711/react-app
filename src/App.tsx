@@ -16,7 +16,7 @@ import "./index.css";
 const { Header, Content, Footer } = Layout;
 
 const App = () => {
-    const isAuthenticated = useSelector(getAuthSelector) || false;
+    const isAuthenticated = useSelector(getAuthSelector);
     const renderIndex = isAuthenticated ? <IndexPage /> : <Login />;
 
     useEffect(() => {
@@ -30,9 +30,7 @@ const App = () => {
             </Header>
             <Content id="main-content">
                 <div>
-                    <div>
-                        {renderIndex}
-                    </div>
+                    {renderIndex}
                 </div>
             </Content>
             <Footer style={{ textAlign: "center" }}>

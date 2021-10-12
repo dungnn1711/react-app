@@ -1,31 +1,42 @@
 
 import { FC } from 'react';
-import { connect } from "react-redux";
+import { connect, RootStateOrAny } from "react-redux";
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { Dispatch } from 'redux';
 
 interface LoginProps {
-    handleLogin: any
+    handleLogin: Function
 }
 
-let [username, passwrod, remember]: any = '';
+type LoginData = {
+    username: string,
+    password: string,
+    remember: boolean
+}
 
-const Login: FC<LoginProps> = ({ handleLogin }) => {
-    const onFinish = (values: any) => {
-        username = values.username;
-        passwrod = values.password;
-        remember = values.remember;
-        handleLogin();
+const Login: FC<LoginProps> = (props) => {
+    const initUserData: LoginData = {
+        username: '',
+        password: '',
+        remember: false
+    }
+
+    const onFinish = (data: LoginData) => {
+        initUserData.username = data.username;
+        initUserData.password = data.password;
+        initUserData.remember = data.remember;
+        props.handleLogin(initUserData);
     };
 
-    const onFinishFailed = (errorInfo: any) => {
+    const onFinishFailed = (errorInfo: unknown) => {
         console.log('Failed:', errorInfo);
     };
 
     return (
         <div id='login-content'>
             <Form
-                name="basic"
+                name="normal_login"
                 initialValues={{ remember: false }}
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
@@ -67,12 +78,12 @@ const Login: FC<LoginProps> = ({ handleLogin }) => {
     );
 };
 
-const mapStateToProps = (state: any) => ({ state });
+const mapStateToProps = (state: RootStateOrAny) => ({ state });
 
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
         // Dispatch login action
-        handleLogin: () => dispatch({ type: 'REQUEST_LOGIN', payload: { username: username, password: passwrod } })
+        handleLogin: (data: LoginData) => dispatch({ type: 'REQUEST_LOGIN', payload: { username: data.username, password: data.password } })
     }
 };
 

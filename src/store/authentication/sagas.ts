@@ -19,7 +19,7 @@ function* handleLogin(action: any) {
                 isAuthenticated: result.data.isAuthenticated
             }
         }));
-    } catch (e) {
+    } catch (e: any) {
         yield put(requestLoginFailure({
             error: e.message
         }));
