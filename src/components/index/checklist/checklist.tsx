@@ -1,11 +1,12 @@
-import { FC, useState } from 'react';
-import { connect } from "react-redux";
+import { FC, useEffect, useState } from 'react';
+import { connect, useSelector } from "react-redux";
 
 import { FormControlLabel, FormGroup, List } from '@mui/material';
 import Switch from '@mui/material/Switch';
 
 import { CheckListModel, ItemStatus } from '../../../model';
 import ChecklistItem from './checklist-item';
+import { getChecklistSelector } from '../../../store/checklist/selector';
 
 interface CheckListProps {}
 
@@ -13,22 +14,25 @@ const CheckList: FC<CheckListProps> = (props: CheckListProps) => {
   const mockList: CheckListModel = {
     items: [
       {
-        id: "item1",
+        id: 1,
         title: "Do something 1",
         status: ItemStatus.DONE,
-        description: "This is description 1"
+        description: "This is description 1",
+        users: []
       },
       {
-        id: "item2",
+        id: 2,
         title: "Do something 2",
         status: ItemStatus.NOT_YET,
-        description: "This is description 2"
+        description: "This is description 2",
+        users: []
       },
       {
-        id: "item3",
+        id: 3,
         title: "Do something 3",
         status: ItemStatus.NOT_YET,
-        description: "This is description 3"
+        description: "This is description 3",
+        users: []
       }
     ]
   }

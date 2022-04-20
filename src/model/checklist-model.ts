@@ -3,13 +3,21 @@ export interface CheckListModel {
 }
 
 export enum ItemStatus {
-    DONE,
-    ON_HOLD,
-    NOT_YET
+    DONE = "DONE",
+    ON_HOLD = "ON_HOLD",
+    NOT_YET = "NOT_YET"
+}
+
+export interface UserInfo {
+    id: number,
+    name: string,
+    dob: string,
+    url: string
 }
 
 export type CheckListItemModel = {
-    id: string;
+    id: number;
+    users: Array<UserInfo>; 
     title: string;
     description?: string;
     status: ItemStatus;
