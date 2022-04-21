@@ -18,7 +18,7 @@ export default (state = initialState, action: ChecklistActions) => {
         case REQUEST_GET_CHECKLIST_SUCCESS:
             return {
                 ...state,
-                data: action.payload.data.data,
+                data: (action.payload.data.data as any).data,
             };
         case REQUEST_GET_CHECKLIST_FAILURE:
             return {

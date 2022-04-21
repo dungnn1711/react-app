@@ -18,12 +18,9 @@ const App = (props: any) => {
     const isAuthenticated = useSelector(getAuthSelector);
     const renderIndex = isAuthenticated ? <IndexPage /> : <Login />;
 
-    const data = useSelector(getChecklistSelector);
-
     useEffect(() => {
-        console.log("isAuthenticated:", isAuthenticated);
-        return props.fetchChecklist();
-    }, [data]);
+        props.fetchChecklist();
+    }, []);
 
     return (
         <IndexPage />

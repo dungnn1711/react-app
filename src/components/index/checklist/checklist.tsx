@@ -4,37 +4,17 @@ import { connect, useSelector } from "react-redux";
 import { FormControlLabel, FormGroup, List } from '@mui/material';
 import Switch from '@mui/material/Switch';
 
-import { CheckListModel, ItemStatus } from '../../../model';
+import { CheckListItemModel, CheckListModel, ItemStatus } from '../../../model';
 import ChecklistItem from './checklist-item';
 import { getChecklistSelector } from '../../../store/checklist/selector';
 
 interface CheckListProps {}
 
 const CheckList: FC<CheckListProps> = (props: CheckListProps) => {
+  const data = useSelector(getChecklistSelector);
+
   const mockList: CheckListModel = {
-    items: [
-      {
-        id: 1,
-        title: "Do something 1",
-        status: ItemStatus.DONE,
-        description: "This is description 1",
-        users: []
-      },
-      {
-        id: 2,
-        title: "Do something 2",
-        status: ItemStatus.NOT_YET,
-        description: "This is description 2",
-        users: []
-      },
-      {
-        id: 3,
-        title: "Do something 3",
-        status: ItemStatus.NOT_YET,
-        description: "This is description 3",
-        users: []
-      }
-    ]
+    items: data as Array<CheckListItemModel>
   }
 
   const [dense, setDense] = useState((localStorage.getItem("dense") === "true") ?? false);
